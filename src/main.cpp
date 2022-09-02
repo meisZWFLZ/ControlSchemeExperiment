@@ -1,7 +1,9 @@
 #include "main.h"
-
-pros::Motor left_mtr(1);
-pros::Motor right_mtr(2);
+#include "events/actions/callback.h"
+#include "events/activations/changes/button.h"
+#include "events/handler.h"
+// pros::Motor left_mtr(1);
+// pros::Motor right_mtr(2);
 
 /**
  * A callback function for LLEMU's center button.
@@ -9,17 +11,17 @@ pros::Motor right_mtr(2);
  * When this callback is fired, it will toggle line 2 of the LCD text between
  * "I was pressed!" and nothing.
  */
-void on_center_button() {
-  static bool pressed = false;
-  pressed = !pressed;
-  if (pressed) {
-    left_mtr.move(12);
-    right_mtr.move(12);
-  } else {
-    left_mtr.brake();
-    right_mtr.brake();
-  }
-}
+// void on_center_button() {
+//   static bool pressed = false;
+//   pressed = !pressed;
+//   if (pressed) {
+//     left_mtr.move(12);
+//     right_mtr.move(12);
+//   } else {
+//     left_mtr.brake();
+//     right_mtr.brake();
+//   }
+// }
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -31,8 +33,7 @@ void initialize() {
   pros::lcd::initialize();
   pros::lcd::set_text(1, "Hello PROS User!");
 
-  pros::lcd::register_btn1_cb(on_center_button);
-
+  // pros::lcd::register_btn1_cb(on_center_button);
 }
 
 /**
@@ -65,6 +66,12 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {}
+void callback() {
+  if (random() > 0)
+    pros::lcd::set_text(2, "POGGIES");
+  else
+    pros::lcd::set_text(2, "TOOTHBRUSH");
+}
 
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -81,17 +88,19 @@ void autonomous() {}
  */
 void opcontrol() {
   pros::Controller master(pros::E_CONTROLLER_MASTER);
+  auto button = pros::controller_digital_e_t::E_CONTROLLER_DIGITAL_A;
+  EventHandler::addListener(ButtonChangedActivation(button, master),
+                            CallbackListener(callback));
+  // while (true) {
+  //   pros::lcd::print(0, "%d %d %d",
+  //                    (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
+  //                    (pros::lcd::read_buttons() & LCD_BTN_CENTER) >> 1,
+  //                    (pros::lcd::read_buttons() & LCD_BTN_RIGHT) >> 0);
+  //   int left = master.get_analog(ANALOG_LEFT_Y);
+  //   int right = master.get_analog(ANALOG_RIGHT_Y);
 
-  while (true) {
-    pros::lcd::print(0, "%d %d %d",
-                     (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
-                     (pros::lcd::read_buttons() & LCD_BTN_CENTER) >> 1,
-                     (pros::lcd::read_buttons() & LCD_BTN_RIGHT) >> 0);
-    int left = master.get_analog(ANALOG_LEFT_Y);
-    int right = master.get_analog(ANALOG_RIGHT_Y);
-
-    left_mtr = left;
-    right_mtr = right;
-    pros::delay(20);
-  }
+  //   left_mtr = left;
+  //   right_mtr = right;
+  //   pros::delay(20);
+  // }
 }

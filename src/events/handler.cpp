@@ -1,24 +1,37 @@
-#include "events/handler.hpp"
+#include "events/handler.h"
 #include "pros/rtos.hpp"
 #include <chrono>
-#include <vector>
 
 bool EventHandler::setUp = false;
+std::unordered_map<EventActivation, std::vector<EventAction>, Hashable::Hasher>
+    EventHandler::listenerMap = {};
 
-void EventHandler::addListener(const EventListener &listener) {
+void EventHandler::addListener(EventActivation activation, EventAction action) {
   if (!EventHandler::setUp)
     EventHandler::setUpManager();
-  EventHandler::listenerMap.at(listener.activation).push_back(listener);
+  /* std::vector<EventAction> val =  */
+  EventHandler::listenerMap.at(activation).push_back(action);
+  action.execute();
+  // if (val.empty())
+  //   val = {};
+  // val.push_back(action);
+  // EventHandler::listenerMap[activation] ;
 };
 
+// void EventHandler::addListener(myKey key, myVal val) {
+//   EventHandler::listenerMap[key].push_back(val);
+// };
+
 void EventHandler::managerLoop() {
-  std::unordered_map<const EventActivation&, std::vector<EventListener>>::iterator i;
-  std::vector<EventListener>::iterator j;
+  // std::unordered_map<const EventActivation&,
+  // std::vector<EventListener>>::iterator i;
+  // std::vector<EventListener>::iterator j;
   while (1) {
-    for (i = EventHandler::listenerMap.begin(); i != listenerMap.end(); ++i)
-      if (i->first.test())
-        for (j = i->second.begin(); j != i->second.end(); ++j)
-          j->listener();
+    for (auto i = EventHandler::listenerMap.begin(); i != listenerMap.end();
+         ++i)
+      if (true)
+        for (auto j = i->second.begin(); j != i->second.end(); ++j)
+          j->execute();
     pros::delay(50);
   }
 }
