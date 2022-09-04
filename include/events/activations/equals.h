@@ -16,5 +16,6 @@ public:
 
 template <typename V>
 template <typename... T>
-EqualsActivation<V>::EqualsActivation(std::string classId, const V val, T... vars)
-    : val(val), EventActivation(classId, vars...){};
+EqualsActivation<V>::EqualsActivation(std::string classId, const V val,
+                                      T... vars)
+    : val(val), EventActivation(classId, val, vars...){};

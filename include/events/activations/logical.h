@@ -1,3 +1,5 @@
+#pragma once
+
 #include "events/activation.h"
 
 template <int numOfOperands> class LogicalActivation : public EventActivation {

@@ -1,7 +1,7 @@
 #pragma once
 #include "events/activations/logical.h"
 
-class XorActivation : LogicalActivation<2> {
+class XorActivation : public LogicalActivation<2> {
 private:
   static const std::string classId;
 
