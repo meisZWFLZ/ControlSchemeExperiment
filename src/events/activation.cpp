@@ -4,9 +4,7 @@
 //   return this->uuid == other.uuid;
 // };
 
-template <typename... T>
-EventActivation::EventActivation(std::string classId, T... vars)
-    : Hashable(classId, vars...){};
+
 
 bool EventActivation::test() { return false; };
 

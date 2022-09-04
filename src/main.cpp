@@ -89,7 +89,7 @@ void callback() {
 void opcontrol() {
   pros::Controller master(pros::E_CONTROLLER_MASTER);
   auto button = pros::controller_digital_e_t::E_CONTROLLER_DIGITAL_A;
-  EventHandler::addListener(ButtonChangedActivation(button, master),
+  EventHandler::addListener(ButtonChangeActivation(button, master),
                             CallbackListener(callback));
   // while (true) {
   //   pros::lcd::print(0, "%d %d %d",

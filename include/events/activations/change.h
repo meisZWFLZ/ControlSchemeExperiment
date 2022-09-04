@@ -7,8 +7,13 @@ private:
 
 protected:
   virtual V getVal() = 0;
-  template <typename... T> ChangeActivation<V>(std::string classId, T... vars);
+  template <typename... T> inline ChangeActivation<V>(std::string classId, T... vars);
 
 public:
   bool test() override;
 };
+
+template <typename V>
+template <typename... T>
+ChangeActivation<V>::ChangeActivation(std::string classId, T... vars)
+    : EventActivation(classId, vars...){};

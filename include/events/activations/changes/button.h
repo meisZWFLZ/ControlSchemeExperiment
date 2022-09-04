@@ -1,7 +1,7 @@
-#include "events/activations/change.h"
 #pragma once
 
-#include "pros/misc.h"
+#include "events/activations/change.h"
+
 #include "pros/misc.hpp"
 
 class ButtonChangeActivation : public ChangeActivation<bool> {
@@ -16,7 +16,7 @@ public:
   pros::Controller controller;
 
   ButtonChangeActivation(pros::controller_digital_e_t button,
-                          pros::Controller controller);
+                         pros::Controller controller);
 
   const bool operator==(const ButtonChangeActivation other) const;
 };

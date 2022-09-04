@@ -8,7 +8,7 @@ class EventActivation : public Hashable {
   //   static const std::string classId;
 
 protected:
-  template <typename... T> EventActivation(std::string classId, T... vars);
+  template <typename... T> inline EventActivation(std::string classId, T... vars);
 
 public:
   // EventActivation();
@@ -18,3 +18,7 @@ public:
 
   virtual ~EventActivation();
 };
+
+template <typename... T>
+EventActivation::EventActivation(std::string classId, T... vars)
+    : Hashable(classId, vars...){};
