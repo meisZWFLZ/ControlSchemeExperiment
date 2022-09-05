@@ -32,7 +32,7 @@ void EventHandler::managerLoop() {
       if (true)
         for (auto j = i->second.begin(); j != i->second.end(); ++j)
           j->execute();
-    pros::delay(50);
+    pros::delay(25);
   }
 }
 

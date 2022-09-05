@@ -10,4 +10,5 @@ protected:
 
 public:
   AndActivation(EventActivation operandA, EventActivation operandB);
+  const bool operator==(const AndActivation other) const;
 };

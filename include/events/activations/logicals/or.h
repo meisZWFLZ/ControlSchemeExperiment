@@ -10,4 +10,5 @@ protected:
 
 public:
   OrActivation(EventActivation operandA, EventActivation operandB);
+  const bool operator==(const OrActivation other) const;
 };

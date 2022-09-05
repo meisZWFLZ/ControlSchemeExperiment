@@ -10,4 +10,5 @@ protected:
 
 public:
   NorActivation(EventActivation operandA, EventActivation operandB);
+  const bool operator==(const NorActivation other) const;
 };

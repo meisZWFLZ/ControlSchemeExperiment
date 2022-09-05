@@ -10,4 +10,5 @@ protected:
 
 public:
   XorActivation(EventActivation operandA, EventActivation operandB);
+  const bool operator==(const XorActivation other) const;
 };

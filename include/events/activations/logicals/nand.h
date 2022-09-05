@@ -10,4 +10,5 @@ protected:
 
 public:
   NandActivation(EventActivation operandA, EventActivation operandB);
+  const bool operator==(const NandActivation other) const;
 };

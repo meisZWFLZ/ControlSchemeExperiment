@@ -2,7 +2,7 @@
 
 #include "events/activation.h"
 
-template <typename V> class RisingEdgeActivation : EventActivation {
+template <typename V> class RisingEdgeActivation : public EventActivation {
 private:
   const V val;
 
@@ -18,6 +18,8 @@ protected:
 public:
   bool test() override;
 };
+
+
 template <typename V> bool RisingEdgeActivation<V>::test() {
   if (val == getVar()) {
     if (lastTest)

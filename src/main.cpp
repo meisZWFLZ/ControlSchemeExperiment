@@ -1,9 +1,4 @@
 #include "main.h"
-#include "events/actions/callback.h"
-#include "events/activations/changes/button.h"
-#include "events/handler.h"
-// pros::Motor left_mtr(1);
-// pros::Motor right_mtr(2);
 
 /**
  * A callback function for LLEMU's center button.
@@ -11,17 +6,15 @@
  * When this callback is fired, it will toggle line 2 of the LCD text between
  * "I was pressed!" and nothing.
  */
-// void on_center_button() {
-//   static bool pressed = false;
-//   pressed = !pressed;
-//   if (pressed) {
-//     left_mtr.move(12);
-//     right_mtr.move(12);
-//   } else {
-//     left_mtr.brake();
-//     right_mtr.brake();
-//   }
-// }
+void on_center_button() {
+  static bool pressed = false;
+  pressed = !pressed;
+  if (pressed) {
+    pros::lcd::set_text(2, "I was ur mom!");
+  } else {
+    pros::lcd::clear_line(2);
+  }
+}
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -33,7 +26,7 @@ void initialize() {
   pros::lcd::initialize();
   pros::lcd::set_text(1, "Hello PROS User!");
 
-  // pros::lcd::register_btn1_cb(on_center_button);
+  pros::lcd::register_btn1_cb(on_center_button);
 }
 
 /**
@@ -66,12 +59,6 @@ void competition_initialize() {}
  * from where it left off.
  */
 void autonomous() {}
-void callback() {
-  if (random() > 0)
-    pros::lcd::set_text(2, "POGGIES");
-  else
-    pros::lcd::set_text(2, "TOOTHBRUSH");
-}
 
 /**
  * Runs the operator control code. This function will be started in its own task
@@ -86,11 +73,18 @@ void callback() {
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
+// void callback() { pros::lcd::print(2, "hi"); };
+
 void opcontrol() {
-  pros::Controller master(pros::E_CONTROLLER_MASTER);
-  auto button = pros::controller_digital_e_t::E_CONTROLLER_DIGITAL_A;
-  EventHandler::addListener(ButtonChangeActivation(button, master),
-                            CallbackListener(callback));
+
+//   pros::Controller master(pros::E_CONTROLLER_MASTER);
+
+//   EventHandler::addListener(
+//       ButtonChangeActivation(
+//           pros::controller_digital_e_t::E_CONTROLLER_DIGITAL_A, master),
+//       CallbackListener(callback));
+
+  // EventHandler::addListener(  )
   // while (true) {
   //   pros::lcd::print(0, "%d %d %d",
   //                    (pros::lcd::read_buttons() & LCD_BTN_LEFT) >> 2,
@@ -102,5 +96,21 @@ void opcontrol() {
   //   left_mtr = left;
   //   right_mtr = right;
   //   pros::delay(20);
+  // }
+
+  // pros::Controller master(pros::E_CONTROLLER_MASTER);
+  // pros::Motor left_mtr(1);
+  // pros::Motor right_mtr(2);
+
+  // while (true) {
+  // 	pros::lcd::print(0, "%d %d %d", (pros::lcd::read_buttons() &
+  // LCD_BTN_LEFT) >> 2, 	                 (pros::lcd::read_buttons() &
+  // LCD_BTN_CENTER) >> 1, 	                 (pros::lcd::read_buttons() & LCD_BTN_RIGHT) >> 0);
+  // 	int left = master.get_analog(ANALOG_LEFT_Y);
+  // 	int right = master.get_analog(ANALOG_RIGHT_Y);
+
+  // 	left_mtr = left;
+  // 	right_mtr = right;
+  // 	pros::delay(20);
   // }
 }

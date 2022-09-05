@@ -10,4 +10,5 @@ protected:
 
 public:
   NotActivation(EventActivation operandA);
+  const bool operator==(const NotActivation other) const;
 };

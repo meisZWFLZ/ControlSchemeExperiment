@@ -10,4 +10,5 @@ protected:
 
 public:
   XnorActivation(EventActivation operandA, EventActivation operandB);
+  const bool operator==(const XnorActivation other) const;
 };

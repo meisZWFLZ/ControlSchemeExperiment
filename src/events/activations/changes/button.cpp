@@ -1,9 +1,6 @@
 #include "events/activations/changes/button.h"
-#include "events/hashable.h"
-#include "pros/misc.h"
-#include "pros/misc.hpp"
-#include <functional>
-#include <string>
+#include "events/hashers/controller.h"
+
 const std::string ButtonChangeActivation::classId = Hashable::generateUUID();
 
 ButtonChangeActivation::ButtonChangeActivation(
@@ -29,23 +26,6 @@ template <> bool ChangeActivation<bool>::test() {
   }
   return false;
 };
-
-template <> std::size_t Hashable::multiVarHash<long, long>(long a, long b) {
-  size_t res = 17;
-  res = res * 31 + std::hash<long>()(a); 
-  res = res * 31 + std::hash<long>()(b);
-  return res;
-};
-
-namespace std {
-template <> struct hash<pros::Controller> {
-  std::size_t operator()(pros::Controller controller) const {
-    ;
-    return Hashable::multiVarHash(controller.get_battery_capacity(),
-                                  controller.get_battery_level());
-  }
-};
-} // namespace std
 
 template <>
 std::size_t
